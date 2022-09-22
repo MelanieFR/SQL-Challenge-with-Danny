@@ -42,4 +42,5 @@ Each of the following case study questions can be answered using a single SQL st
 
 Please use the below link to access Danny's webpage:
 
+
 [Case Study #1 - Danny's Diner](https://8weeksqlchallenge.com/case-study-1/)
