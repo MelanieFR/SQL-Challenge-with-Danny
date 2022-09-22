@@ -1,43 +1,18 @@
 # SQL-Challenge-with-Danny
 
-# Case Study 1: Danny's Diner
+# 8 Weeks SQL Challenge 
 
-# Introduction
-Danny seriously loves Japanese food so in the beginning of 2021, he decides to embark upon a risky venture and opens up a cute little restaurant that sells his 3 favourite foods: sushi, curry and ramen.
+This repository contains the solutions for the case studies in [8WeekSQLChallenge](https://8weeksqlchallenge.com/). The 8 Week SQL Challenge is started by Danny Ma through Data With Danny virtual data apprenticeship program, which consists of 8 different SQL challenges.
 
-Danny’s Diner is in need of your assistance to help the restaurant stay afloat - the restaurant has captured some very basic data from their few months of operation but have no idea how to use their data to help them run the business.
+Each case-study folder contains the following files
 
-# Problem Statement:
+    A readme file explaining the problem statement and datasets used
+    SQL file to create the schema, tables and loading data
 
-Danny wants to use the data to answer a few simple questions about his customers, especially about their visiting patterns, how much money they’ve spent and also which menu items are their favourite. Having this deeper connection with his customers will help him deliver a better and more personalised experience for his loyal customers.
+Note:
 
-He plans on using these insights to help him decide whether he should expand the existing customer loyalty program - additionally he needs help to generate some basic datasets so his team can easily inspect the data without needing to use SQL.
+    Solutions are coded in MySQL
+ 
+# Challenge Case Study:
 
-Danny has provided you with a sample of his overall customer data due to privacy issues - but he hopes that these examples are enough for you to write fully functioning SQL queries to help him answer his questions!
-
-Danny has shared with you 3 key datasets for this case study:
-
-    sales
-    menu
-    members
-
-![image](https://user-images.githubusercontent.com/93538452/191837919-77d57933-eda4-4e97-930a-d33b1f68d072.png)
-
-
-# Case Study Questions:
-Each of the following case study questions can be answered using a single SQL statement:
-
-    What is the total amount each customer spent at the restaurant?
-    How many days has each customer visited the restaurant?
-    What was the first item from the menu purchased by each customer?
-    What is the most purchased item on the menu and how many times was it purchased by all customers?
-    Which item was the most popular for each customer?
-    Which item was purchased first by the customer after they became a member?
-    Which item was purchased just before the customer became a member?
-    What is the total items and amount spent for each member before they became a member?
-    If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
-    In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
-
-
-Please use the below link to access Danny's webpage:
-https://8weeksqlchallenge.com/case-study-1/
+[Case Study #1 - Danny's Diner](https://8weeksqlchallenge.com/case-study-1/)
