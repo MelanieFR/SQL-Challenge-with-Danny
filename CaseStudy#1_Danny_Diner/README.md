@@ -16,9 +16,9 @@ Danny has provided you with a sample of his overall customer data due to privacy
 Danny has shared with you 3 key datasets for this case study:
 
 
-* sales: The sales table captures all customer_id level purchases with an corresponding order_date and product_id information for when and what menu items were ordered.
-* menu: The menu table maps the product_id to the actual product_name and price of each menu item.
-* members: The members table captures the join_date when a customer_id joined the beta version of the Danny’s Diner loyalty program.
+ * sales: The sales table captures all customer_id level purchases with an corresponding order_date and product_id information for when and what menu items were ordered.
+ * menu: The menu table maps the product_id to the actual product_name and price of each menu item.
+ * members: The members table captures the join_date when a customer_id joined the beta version of the Danny’s Diner loyalty program.
 
 
 ![image](https://user-images.githubusercontent.com/93538452/191837919-77d57933-eda4-4e97-930a-d33b1f68d072.png)
@@ -27,8 +27,9 @@ Danny has shared with you 3 key datasets for this case study:
 # Case Study Questions:
 Each of the following case study questions can be answered using a single SQL statement:
 
-    What is the total amount each customer spent at the restaurant?
-    How many days has each customer visited the restaurant?
+
+- What is the total amount each customer spent at the restaurant?
+- How many days has each customer visited the restaurant?
     What was the first item from the menu purchased by each customer?
     What is the most purchased item on the menu and how many times was it purchased by all customers?
     Which item was the most popular for each customer?
@@ -40,7 +41,5 @@ Each of the following case study questions can be answered using a single SQL st
 
 
 Please use the below link to access Danny's webpage:
-https://8weeksqlchallenge.com/case-study-1/
-
 
 [Case Study #1 - Danny's Diner](https://8weeksqlchallenge.com/case-study-1/)
