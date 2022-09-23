@@ -1,8 +1,8 @@
-💰 🏦 💸 # Case Study #4: Data Bank 💰 🏦 💸
+# 💰 🏦 💸 Case Study 4: Data Bank 💰 🏦 💸
 
 In this folder you will find: 
-* 1. The SQL code to create the tables
-* 2. The SQL code to answer all questions + explanations for the more complexe questions
+* The SQL code to create the tables
+* The SQL code to answer all questions + explanations for the more complexe questions
 - [x] Note: My answers are coded in MySQL 
 
 ## Introduction
@@ -37,6 +37,7 @@ This random distribution changes frequently to reduce the risk of hackers gettin
 
 The following case study questions include some general data exploration analysis for the nodes and transactions before diving right into the core business questions and finishes with a challenging final request!
 
+
 ### A. Customer Nodes Exploration
 
 
@@ -45,5 +46,22 @@ The following case study questions include some general data exploration analysi
 3. How many customers are allocated to each region?
 4. How many days on average are customers reallocated to a different node?
 5. What is the median, 80th and 95th percentile for this same reallocation days metric for each region?
+
+
+### B. Customer Transactions
+
+
+1. What is the unique count and total amount for each transaction type?
+2. What is the average total historical deposit counts and amounts for all customers?
+3. For each month - how many Data Bank customers make more than 1 deposit and either 1 purchase or 1 withdrawal in a single month?
+4. What is the closing balance for each customer at the end of the month?
+5. What is the percentage of customers who increase their closing balance by more than 5%?
+
+
+Please use the below link to access Danny's webpage:
+
+
+[Case Study #4 - Data Bank](https://8weeksqlchallenge.com/case-study-4/)
+
 
 
