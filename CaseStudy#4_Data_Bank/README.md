@@ -3,7 +3,9 @@
 In this folder you will find: 
 * The SQL code to create the tables
 * The SQL code to answer all questions + explanations for the more complexe questions
+
 ___Note: My answers are coded in MySQL___ 
+
 
 ## Introduction
 
@@ -18,6 +20,7 @@ Customers are allocated cloud data storage limits which are directly linked to h
 The management team at Data Bank want to increase their total customer base - but also need some help tracking just how much data storage their customers will need.
 
 This case study is all about calculating metrics, growth and helping the business analyse their data in a smart way to better forecast and plan for their future developments!
+
 
 ## Available Data
 
@@ -78,6 +81,7 @@ Using all of the data available - how much data would have been required for eac
 
 
 ### D. Extra Challenge
+
 
 Data Bank wants to try another option which is a bit more difficult to implement - they want to calculate data growth using an interest calculation, just like in a traditional savings account you might have with a bank.
 
