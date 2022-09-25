@@ -90,16 +90,39 @@ FROM ordering
 WHERE rnk = 1
 GROUP BY customer_id;
 
--- I would use the column 'cnt' to show how many times the most popular item per customer has been ordered
--- Also, add the group by 'product_name' to be sure to return all popular items (in the case there are several - see customer B)
+	-- I would use the column 'cnt' to show how many times the most popular item per customer has been ordered
+	-- Also, add the group by 'product_name' to be sure to return all popular items (in the case there are several - see customer B)
 SELECT customer_id, product_name, cnt
 FROM ordering
 WHERE rnk = 1
 GROUP BY customer_id, product_name
+;
+
+-- 6. Which item was purchased first by the customer after they became a member?
+-- This question implies a condition: order_date > join_date
+-- Then return the min(order_date) 
+
+WITH details as (
+SELECT s.customer_id, mem.join_date, s.order_date, m.product_name, 
+dense_rank() over(partition by customer_id order by order_date ASC) as rnk
+FROM sales as s
+INNER JOIN members as mem
+USING (customer_id)
+INNER JOIN menu as m
+USING (product_id)
+WHERE s.order_date >= mem.join_date
+GROUP BY s.customer_id, mem.join_date, s.order_date, m.product_name
+ORDER BY s.order_date ASC
+)
+SELECT distinct customer_id, join_date, order_date, group_concat(product_name) as first_order
+FROM details
+WHERE rnk = 1
+GROUP BY customer_id
+ORDER BY customer_id
+
+	-- Note: by using dense_rank() window function, the ranking count will restart from 1 for each partition
 
 
-
--- Which item was purchased first by the customer after they became a member?
 -- Which item was purchased just before the customer became a member?
 -- What is the total items and amount spent for each member before they became a member?
 -- If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
