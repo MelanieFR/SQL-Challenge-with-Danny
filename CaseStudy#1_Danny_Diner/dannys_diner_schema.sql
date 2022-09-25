@@ -20,10 +20,18 @@ VALUES
   ('B', '2021-01-11', '1'),
   ('B', '2021-01-16', '3'),
   ('B', '2021-02-01', '3'),
-  ('C', '2021-01-01', '3'),
-  ('C', '2021-01-01', '3'),
+  ('C', '2021-02-01', '3'),
+  ('C', '2021-02-01', '3'),
   ('C', '2021-01-07', '3');
- 
+
+-- to update some values of the original table
+SET SQL_SAFE_UPDATES = 0;
+UPDATE sales
+SET order_date = '2021-02-01'
+WHERE customer_id = 'C' and '2021-01-01';
+SET SQL_SAFE_UPDATES = 1;
+
+
 
 CREATE TABLE menu (
   product_id INTEGER,
