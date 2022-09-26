@@ -15,10 +15,10 @@ ORDER BY customer_id ASC
 ;
 
 -- 3. What was the first item from the menu purchased by each customer?
--- a. This kind of question can be answered with a window function, because it requires to "order" the values based on the order_date for each customer
+	-- a. This kind of question can be answered with a window function, because it requires to "order" the values based on the order_date for each customer
 WITH CTE as (
-SELECT customer_id, product_name, DENSE_RANK() OVER (Partition by customer_id Order by order_date) as rnk
--- even though values are ordered ASC by default, it is good practice to write it down for the window functions
+SELECT customer_id, product_name, DENSE_RANK() OVER (Partition by customer_id Order by order_date ASC) as rnk
+	-- even though values are ordered ASC by default, it is good practice to write it down for the window functions
 FROM sales as s
 INNER JOIN menu as m
 ON s.product_id = m.product_id 
@@ -28,24 +28,24 @@ FROM CTE
 WHERE rnk = 1
 ORDER BY customer_id ASC
 ;
--- The above code will return each product_name that each customer ordered the first time at this restaurant.
--- However, customer A ordered 2 diff items (curry and sushi). Let's have these items written on the same line:
+	-- The above code will return each product_name that each customer ordered the first time at this restaurant.
+	-- However, customer A ordered 2 diff items (curry and sushi). Let's have these items written on the same line:
 WITH CTE as (
 SELECT customer_id, product_name, DENSE_RANK() OVER (Partition by customer_id Order by order_date) as rnk
--- even though values are ordered ASC by default, it is good practice to write it down for the window functions
+	-- even though values are ordered ASC by default, it is good practice to write it down for the window functions
 FROM sales as s
 INNER JOIN menu as m
 ON s.product_id = m.product_id 
 )
 SELECT distinct customer_id, group_concat(distinct product_name) as first_order
--- group_concat function will "concat" the values of the column called based on the grouped function
+	-- group_concat function will "concat" the values of the column called based on the grouped function
 FROM CTE
 WHERE rnk = 1
 GROUP BY customer_id
 ORDER BY customer_id ASC
 ;
 
--- b. That question can also be answered by using the MIN() function on order_date:
+	-- b. That question can also be answered by using the MIN() function on order_date:
 SELECT s.customer_id, s.order_date, group_concat(m.product_name) as first_order
 FROM sales as s
 JOIN menu as m
@@ -58,12 +58,11 @@ as sub
 ON s.customer_id = sub.customer_id AND s.order_date = sub.min_date
 GROUP BY s.customer_id
 ORDER BY s.customer_id
-
--- Explanation:
--- In the subquery, I apply the min() function on the order_date column to get only the first order date for all customers
--- Then I group my min_date rows PER customer_id
--- Then I join the outer query with the suquery on a common column AND on the SAME order_date to filter in only these dates 
--- Finally I group by customer_id 
+	-- Explanation:
+	-- In the subquery, I apply the min() function on the order_date column to get only the first order date for all customers
+	-- Then I group my min_date rows PER customer_id
+	-- Then I join the outer query with the suquery on a common column AND on the SAME order_date to filter in only these dates 
+	-- Finally I group by customer_id 
 ;
 
 -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
@@ -77,7 +76,7 @@ LIMIT 1
 ;
 
 -- 5. Which item was the most popular for each customer?
--- I can use a window function to "order" the items per nbr of times they were ordered by each customer 
+	-- I can use a window function to "order" the items per nbr of times they were ordered by each customer 
 WITH ordering AS (
 SELECT customer_id, product_name, count(product_id) as cnt, DENSE_RANK() OVER(partition by customer_id order by count(order_date) DESC) as rnk
 FROM sales as s
@@ -99,8 +98,8 @@ GROUP BY customer_id, product_name
 ;
 
 -- 6. Which item was purchased first by the customer after they became a member?
--- This question implies a condition: order_date > join_date
--- Then return the min(order_date) 
+	-- This question implies a condition: order_date > join_date
+	-- Then return the min(order_date) 
 
 WITH details as (
 SELECT s.customer_id, mem.join_date, s.order_date, m.product_name, 
@@ -119,7 +118,6 @@ FROM details
 WHERE rnk = 1
 GROUP BY customer_id
 ORDER BY customer_id
-
 	-- Note: by using dense_rank() window function, the ranking count will restart from 1 for each partition
 
 
