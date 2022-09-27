@@ -168,23 +168,24 @@ ORDER BY s.customer_id
 ;
 
 -- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
-
-WITH program_last_day AS
+	-- this question introduces several conditions:
+    -- first calculate when is the last_day of the super program (1 week from the membership date)
+WITH program_end_date AS
   (SELECT join_date,
-          date_add(join_date, INTERVAL 6 day) AS program_last_date,
+          date_add(join_date, INTERVAL 6 day) AS last_day_promo,
           customer_id
    FROM members)
 SELECT s.customer_id,
        SUM(CASE 
-			WHEN order_date BETWEEN join_date AND program_last_date THEN price*10*2
-            WHEN order_date NOT BETWEEN join_date AND program_last_date
+			WHEN order_date BETWEEN join_date AND last_day_promo THEN price*10*2
+            WHEN order_date NOT BETWEEN join_date AND last_day_promo
             AND product_name = 'sushi' THEN price*10*2
-            WHEN order_date NOT BETWEEN join_date AND program_last_date
+            WHEN order_date NOT BETWEEN join_date AND last_day_promo
             AND product_name != 'sushi' THEN price*10
            END) AS customer_points
 FROM menu AS m
 INNER JOIN sales AS s ON m.product_id = s.product_id
-INNER JOIN program_last_day AS mem ON mem.customer_id = s.customer_id
+INNER JOIN program_end_date AS mem ON mem.customer_id = s.customer_id
 WHERE order_date <='2021-01-31'
 AND order_date >=join_date
 GROUP BY s.customer_id
