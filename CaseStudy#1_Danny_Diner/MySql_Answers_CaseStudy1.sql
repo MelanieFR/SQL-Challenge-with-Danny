@@ -155,8 +155,8 @@ ORDER BY s.customer_id
 
 -- If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 	-- This question implies a condition:
-	-- points WHERE product_name LIKE '%sushi%' THEN price * 10
-	-- points WHERE product_name NOT LIKE '%sushi%' THEN price * 2
+	-- points WHEN product_name LIKE '%sushi%' THEN price * 10
+	-- points WHEN product_name NOT LIKE '%sushi%' THEN price * 2
     -- We can use the CASE WHEN() on the SELECT clause to create a new column: points
 SELECT s.customer_id,
 SUM(CASE WHEN m.product_name NOT LIKE '%sushi%' then price*10 else price*2 end) as points
@@ -165,8 +165,6 @@ INNER JOIN menu as m
 USING (product_id)
 GROUP BY s.customer_id
 ORDER BY s.customer_id
+;
 
-    
-    
-
--- In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+-- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
