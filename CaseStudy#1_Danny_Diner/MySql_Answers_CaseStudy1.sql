@@ -118,10 +118,39 @@ FROM details
 WHERE rnk = 1
 GROUP BY customer_id
 ORDER BY customer_id
+;
 	-- Note: by using dense_rank() window function, the ranking count will restart from 1 for each partition
 
+-- 7. Which item was purchased just before the customer became a member?
+WITH purchase_details as (
+SELECT s.customer_id, mem.join_date, s.order_date, m.product_name, 
+dense_rank() over(partition by customer_id order by order_date DESC) as rnk -- DESC to have the last order_date on the top
+FROM sales as s
+INNER JOIN members as mem
+USING (customer_id)
+INNER JOIN menu as m
+USING (product_id)
+WHERE s.order_date < mem.join_date
+GROUP BY s.customer_id, mem.join_date, s.order_date, m.product_name
+ORDER BY s.order_date ASC
+)
+SELECT distinct customer_id, join_date, order_date, group_concat(product_name) as first_order
+FROM purchase_details
+WHERE rnk = 1
+GROUP BY customer_id
+ORDER BY customer_id
+;
 
--- Which item was purchased just before the customer became a member?
--- What is the total items and amount spent for each member before they became a member?
+-- 8. What is the total items and amount spent for each member before they became a member?
+SELECT s.customer_id, count(s.product_id) as total_items, concat('$', sum(price)) as amnt_spent
+FROM sales as s
+INNER JOIN menu as m
+ON s.product_id = m.product_id
+INNER JOIN members as mem
+ON s.customer_id = mem.customer_id
+WHERE s.order_date < mem.join_date
+GROUP BY s.customer_id
+ORDER BY s.customer_id
+
 -- If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 -- In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
