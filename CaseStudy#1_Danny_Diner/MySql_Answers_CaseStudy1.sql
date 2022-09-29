@@ -169,7 +169,7 @@ ORDER BY s.customer_id
 
 -- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 	-- this question introduces several conditions:
-    -- first calculate when is the last_day of the super program (1 week from the membership date)
+    -- first calculate when is the last_day of the super program (1 week from the membership date of each customer)
     -- then introduce the conditions:
 		-- if join_date <= order_date <  last_day of the super program then price*10*2
         -- if the order = 'sushi' and order_date IS NOT DURING the super program AND before 01/31 price*2
