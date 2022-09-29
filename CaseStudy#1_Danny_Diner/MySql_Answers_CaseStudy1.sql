@@ -157,7 +157,7 @@ ORDER BY s.customer_id
 	-- This question implies a condition:
 	-- points WHEN product_name LIKE '%sushi%' THEN price * 10
 	-- points WHEN product_name NOT LIKE '%sushi%' THEN price * 2
-    -- We can use the CASE WHEN() on the SELECT clause to create a new column: points
+		-- We can use the CASE WHEN() on the SELECT clause to create a new column: points
 SELECT s.customer_id,
 SUM(CASE WHEN m.product_name NOT LIKE '%sushi%' then price*10 else price*2 end) as points
 FROM sales as s
