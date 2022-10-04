@@ -27,4 +27,28 @@ FROM customer_orders;
 
 SELECT * FROM customer_orders_clean;
 
+-- Same principle for runner_orders table.
+-- We need to clean/ standardize the values in the columns 'pickup_time', 'distance', 'duration', 'cancellation'
+-- We will notice that 'distance' and 'duration' columns both have rows with units (respectively km, minutes/min) that we have to trim: 
+
+DROP TABLE IF EXISTS runner_orders_clean;
+CREATE TABLE runner_orders_clean AS
+SELECT order_id, runner_id,
+(CASE WHEN pickup_time LIKE '%null%' then NULL else pickup_time END) AS pickup_time,
+(CASE WHEN distance LIKE '%null%' then NULL 
+else CAST(regexp_replace(distance, '[a-z]+', '') AS FLOAT) END) AS distance,
+-- Note: We can also use the TRIM() function, but it requires an input for each value to replace and is more time-consuming
+-- WHEN distance LIKE '%km%' then CAST(TRIM(TRAILING 'km' FROM distance) AS FLOAT)
+-- WHEN distance LIKE '% km%' then CAST(TRIM(TRAILING ' km' FROM distance) AS FLOAT)
+-- else distance END) AS distance,
+(CASE WHEN duration LIKE '%null%' THEN NULL ELSE CAST(regexp_replace(duration, '[a-z]+', '') AS FLOAT) END) AS duration,
+(CASE WHEN cancellation LIKE '' THEN NULL
+WHEN cancellation LIKE 'null' THEN NULL
+ELSE cancellation
+END) AS cancellation
+FROM runner_orders;
+
+
+SELECT * FROM runner_orders_clean
+
 
