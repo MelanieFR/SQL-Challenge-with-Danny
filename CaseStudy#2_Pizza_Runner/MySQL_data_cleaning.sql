@@ -1,5 +1,5 @@
 -- Proceed to data cleaning first:
-
+-- First let's see about the customer_orders table:
 SELECT *
 FROM customer_orders;
 
@@ -48,7 +48,7 @@ ELSE cancellation
 END) AS cancellation
 FROM runner_orders;
 
+SELECT * FROM runner_orders_clean;
 
-SELECT * FROM runner_orders_clean
 
 
