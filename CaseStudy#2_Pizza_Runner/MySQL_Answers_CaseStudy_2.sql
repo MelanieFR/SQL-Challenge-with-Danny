@@ -41,6 +41,20 @@ GROUP BY customer_id
 ORDER BY customer_id;
 
 -- 6. What was the maximum number of pizzas delivered in a single order?
+
+SELECT c.customer_id, c.order_id, count(c.pizza_id) as cnt
+FROM customer_orders_clean as c
+INNER JOIN runner_orders_clean as r
+ON c.order_id = r.order_id
+WHERE cancellation IS NULL
+GROUP BY c.customer_id, c.order_id
+ORDER BY cnt DESC
+-- LIMIT 1 to return the first row of the query
+
+
+
+-- ORDER BY cnt DESC
+
 -- 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
 -- 8. How many pizzas were delivered that had both exclusions and extras?
 -- 9. What was the total volume of pizzas ordered for each hour of the day?
