@@ -27,12 +27,19 @@ WHERE cancellation IS NULL) as pizza
 INNER JOIN pizza_names as p
 ON pizza.pizza_id = p.pizza_id
 GROUP BY p.pizza_id, pizza_name
-ORDER BY pizza_type
+ORDER BY pizza_type;
 
-
--- 3. How many successful orders were delivered by each runner?
--- 4. How many of each type of pizza was delivered?
 -- 5. How many Vegetarian and Meatlovers were ordered by each customer?
+
+SELECT distinct customer_id,
+SUM(CASE WHEN c.pizza_id = 1 THEN 1 ELSE 0 END) AS Meatlovers_count,
+SUM(CASE WHEN c.pizza_id = 2 THEN 1 ELSE 0 END) AS Vegetarian_count
+FROM customer_orders_clean as c
+INNER JOIN pizza_names as p
+ON c.pizza_id = p.pizza_id
+GROUP BY customer_id
+ORDER BY customer_id;
+
 -- 6. What was the maximum number of pizzas delivered in a single order?
 -- 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
 -- 8. How many pizzas were delivered that had both exclusions and extras?
