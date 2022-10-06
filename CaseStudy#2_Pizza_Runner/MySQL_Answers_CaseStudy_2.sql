@@ -56,17 +56,23 @@ ORDER BY cnt DESC;
 -- Is considered a change any added or removed topping : sum(exclusions) >= 1 OR sum(extras) >=1
 
 SELECT distinct customer_id, 
-sum(CASE WHEN exclusions >=1 OR extras IS NOT NULL THEN 1 ELSE 0 END) as changed_pizza,
+sum(CASE WHEN exclusions >=1 OR extras >=1 THEN 1 ELSE 0 END) as changed_pizza,
 sum(CASE WHEN exclusions IS NULL AND extras IS NULL then 1 ELSE 0 END) as no_changed_pizza -- Here we use AND because both conditions have to be valid to be considered
 FROM customer_orders_clean
 INNER JOIN runner_orders_clean USING (order_id)
 WHERE cancellation IS NULL
 GROUP BY customer_id
-ORDER BY customer_id
-
-
-
+ORDER BY customer_id;
 
 -- 8. How many pizzas were delivered that had both exclusions and extras?
+-- We can reuse a piece of the above code:
+
+SELECT customer_id, sum(CASE WHEN exclusions >=1 AND extras >=1 THEN 1 ELSE 0 END) as changed_pizza -- we update the previous OR condition with AND condition
+FROM customer_orders_clean
+INNER JOIN runner_orders_clean USING (order_id)
+WHERE cancellation IS NULL
+GROUP BY customer_id
+ORDER BY changed_pizza DESC
+
 -- 9. What was the total volume of pizzas ordered for each hour of the day?
 -- 10. What was the volume of orders for each day of the week?
