@@ -1,6 +1,6 @@
 -- A. Pizza Metrics
--- 1. How many pizzas were ordered?
 
+-- 1. How many pizzas were ordered?
 SELECT count(pizza_id) as total_nbr_pizza
 FROM customer_orders;
 
@@ -10,6 +10,7 @@ FROM customer_orders;
 
 -- 3. How many successful orders were delivered by each runner?
 	-- the cancellation column will give me the reason why a customer cancelled the order. So, applying the inverse logic I'll be able to identify the delivered orders
+    
 SELECT 
 	runner_id, 
     count(distinct order_id) as nbr_customer_orders
