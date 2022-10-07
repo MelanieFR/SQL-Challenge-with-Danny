@@ -13,7 +13,8 @@ GROUP BY week(registration_date);
 -- The minute() function from MysQL will be handy to return our output. 
 -- Note: be sure the argument passed in minute is in datatime format. 
 SELECT distinct
-	runner_id, round(avg(minute(cast(pickup_time as datetime))),2) as avg_pickup_time
+	runner_id, 
+    round(avg(minute(cast(pickup_time as datetime))),2) as avg_pickup_time
 FROM runner_orders_clean
 group by runner_id;
 
