@@ -75,11 +75,12 @@ GROUP BY customer_id
 ORDER BY changed_pizza DESC;
 
 -- 9. What was the total volume of pizzas ordered for each hour of the day?
+-- I define the volume as the quantity
 -- Let's get each order_date, and from that date extract the hour + the count() of pizza ordered. 
 -- We'll use the hour() function 
-SELECT distinct CAST(order_time as date) as order_date, hour(order_time) as order_hour, count(order_id) as nbr_of_pizza_ordered
+SELECT distinct CAST(order_time as date) as order_date, hour(order_time) as order_hour, count(order_id) as qty_of_pizza_ordered
 FROM customer_orders_clean
 GROUP BY day(order_time), hour(order_time)
-ORDER BY order_date, order_hour
+ORDER BY order_date, order_hour;
 
 -- 10. What was the volume of orders for each day of the week?
