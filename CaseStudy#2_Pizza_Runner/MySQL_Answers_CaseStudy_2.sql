@@ -9,7 +9,9 @@ FROM customer_orders;
 
 -- 3. How many successful orders were delivered by each runner?
 	-- the cancellation column will give me the reason why a customer cancelled the order. So, applying the inverse logic I'll be able to identify the delivered orders
-SELECT runner_id, count(distinct order_id) as nbr_customer_orders
+SELECT 
+	runner_id, 
+    count(distinct order_id) as nbr_customer_orders
 FROM runner_orders_clean
 WHERE cancellation IS NULL
 GROUP BY runner_id
@@ -17,9 +19,12 @@ GROUP BY runner_id
 
 -- 4. How many of each type of pizza was delivered?
 
-SELECT p.pizza_id, pizza_name as pizza_type, count(pizza.pizza_id) as delivered
+SELECT 
+	p.pizza_id, 
+    pizza_name as pizza_type, 
+    count(pizza.pizza_id) as delivered
 FROM (
-SELECT  pizza_id
+	SELECT pizza_id
 FROM customer_orders_clean as c
 INNER JOIN runner_orders_clean as r
 ON c.order_id = r.order_id
@@ -31,9 +36,10 @@ ORDER BY pizza_type;
 
 -- 5. How many Vegetarian and Meatlovers were ordered by each customer?
 
-SELECT distinct customer_id,
-SUM(CASE WHEN c.pizza_id = 1 THEN 1 ELSE 0 END) AS Meatlovers_count,
-SUM(CASE WHEN c.pizza_id = 2 THEN 1 ELSE 0 END) AS Vegetarian_count
+SELECT 
+	distinct customer_id,
+	SUM(CASE WHEN c.pizza_id = 1 THEN 1 ELSE 0 END) AS Meatlovers_count,
+	SUM(CASE WHEN c.pizza_id = 2 THEN 1 ELSE 0 END) AS Vegetarian_count
 FROM customer_orders_clean as c
 INNER JOIN pizza_names as p
 ON c.pizza_id = p.pizza_id
@@ -42,7 +48,9 @@ ORDER BY customer_id;
 
 -- 6. What was the maximum number of pizzas delivered in a single order?
 
-SELECT c.customer_id, c.order_id, count(c.pizza_id) as cnt
+SELECT 
+	c.customer_id, 
+    c.order_id, count(c.pizza_id) as cnt
 FROM customer_orders_clean as c
 INNER JOIN runner_orders_clean as r
 ON c.order_id = r.order_id
@@ -55,9 +63,10 @@ ORDER BY cnt DESC;
 -- this question implies a condition
 -- Is considered a change any added or removed topping : sum(exclusions) >= 1 OR sum(extras) >=1
 
-SELECT distinct customer_id, 
-sum(CASE WHEN exclusions >=1 OR extras >=1 THEN 1 ELSE 0 END) as changed_pizza,
-sum(CASE WHEN exclusions IS NULL AND extras IS NULL then 1 ELSE 0 END) as no_changed_pizza -- Here we use AND because both conditions have to be valid to be considered
+SELECT distinct 
+	customer_id, 
+	sum(CASE WHEN exclusions >=1 OR extras >=1 THEN 1 ELSE 0 END) as changed_pizza,
+	sum(CASE WHEN exclusions IS NULL AND extras IS NULL then 1 ELSE 0 END) as no_changed_pizza -- Here we use AND because both conditions have to be valid to be considered
 FROM customer_orders_clean
 INNER JOIN runner_orders_clean USING (order_id)
 WHERE cancellation IS NULL
@@ -67,7 +76,9 @@ ORDER BY customer_id;
 -- 8. How many pizzas were delivered that had both exclusions and extras?
 -- We can reuse a piece of the above code:
 
-SELECT customer_id, sum(CASE WHEN exclusions >=1 AND extras >=1 THEN 1 ELSE 0 END) as changed_pizza -- we update the previous OR condition with AND condition
+SELECT 
+	customer_id, 
+    sum(CASE WHEN exclusions >=1 AND extras >=1 THEN 1 ELSE 0 END) as changed_pizza -- we update the previous OR condition with AND condition
 FROM customer_orders_clean
 INNER JOIN runner_orders_clean USING (order_id)
 WHERE cancellation IS NULL
@@ -78,7 +89,10 @@ ORDER BY changed_pizza DESC;
 -- I define the volume as the quantity
 -- Let's get each order_date, and from that date extract the hour + the count() of pizza ordered. 
 -- We'll use the hour() function 
-SELECT distinct CAST(order_time as date) as order_date, hour(order_time) as order_hour, count(order_id) as qty_of_pizza_ordered
+SELECT distinct 
+	CAST(order_time as date) as order_date, 
+    hour(order_time) as order_hour, 
+    count(order_id) as qty_of_pizza_ordered
 FROM customer_orders_clean
 GROUP BY day(order_time), hour(order_time)
 ORDER BY order_date, order_hour;
