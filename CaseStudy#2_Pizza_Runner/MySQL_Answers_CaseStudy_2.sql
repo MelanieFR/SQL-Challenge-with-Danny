@@ -1,3 +1,4 @@
+-- A. Pizza Metrics
 -- 1. How many pizzas were ordered?
 
 SELECT count(pizza_id) as total_nbr_pizza
@@ -98,3 +99,15 @@ GROUP BY day(order_time), hour(order_time)
 ORDER BY order_date, order_hour;
 
 -- 10. What was the volume of orders for each day of the week?
+-- we can use the dayofweek() from MySQL, for example: 
+SELECT distinct
+	dayofweek(CAST(order_time as date)) -- that function returns a number (from 1 to 7) that we have to convert to the day (from Monday to Sunday) 
+FROM customer_orders_clean;
+
+-- or we can use dayname(date_argument) which will retrieve the name of the day 
+SELECT distinct
+	dayname(CAST(order_time as date)) as order_day,
+    count(order_id) as qty_of_pizza_ordered
+FROM customer_orders_clean
+GROUP BY dayname(order_time)
+ORDER BY qty_of_pizza_ordered desc
