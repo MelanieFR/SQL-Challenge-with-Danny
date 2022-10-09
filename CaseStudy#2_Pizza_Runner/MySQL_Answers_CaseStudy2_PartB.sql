@@ -74,7 +74,7 @@ SELECT
     round(count(pickup_time)/count(*)*100) as 'percentage of delivery'
 from runner_orders_clean
 group by runner_id
-order by 3 desc; -- here "3" refers to the second column in the select statement ('percentage of delivery')
+order by 3 desc; -- here "3" refers to the 3rd column in the select statement ('percentage of delivery')
 
 
 
