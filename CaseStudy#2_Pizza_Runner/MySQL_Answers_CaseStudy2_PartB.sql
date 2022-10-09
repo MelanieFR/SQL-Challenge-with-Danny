@@ -64,7 +64,34 @@ SELECT distinct
     round(avg((distance*60)/duration),2) as 'avg speed (in mins)'
 FROM runner_orders_clean
 where cancellation is null
-GROUP BY runner_id, order_id with rollup
+GROUP BY runner_id, order_id with rollup;
+
+-- 7. What is the successful delivery percentage for each runner?
+WITH nbr_delivery AS ( 
+	SELECT runner_id,
+    count(order_id) as nbr_delivery
+FROM runner_orders_clean
+WHERE cancellation is null
+GROUP BY runner_id
+),
+
+orders_ AS (
+	SELECT runner_id, 
+    count(order_id) as nbr_order
+from runner_orders_clean
+group by runner_id
+)
+
+SELECT 
+	o.runner_id as runner_id,
+    round(sum((nbr_delivery/nbr_order)*100), 2) as 'percentage of delivery'
+from nbr_delivery as n
+inner join orders_ as o
+using (runner_id)
+group by o.runner_id
+order by 2 desc -- here "2" refers to the second column in the select statement ('percentage of delivery')
+
+
 
 
 
