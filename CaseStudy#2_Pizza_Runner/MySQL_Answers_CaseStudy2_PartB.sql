@@ -36,3 +36,35 @@ order by preparation_time desc
 -- Indeed we notice the prepration time is higher when the number of pizza per order is high
 
 -- 4. What was the average distance travelled for each customer?
+-- the column distance will give us this info: 
+
+SELECT distinct customer_id,
+	round(avg(distance),2) as 'avg distance (in km)'
+FROM customer_orders_clean
+inner join runner_orders_clean 
+using (order_id)
+where distance is not null
+group by customer_id;
+
+-- 5. What was the difference between the longest and shortest delivery times for all orders?
+
+SELECT 
+	min(duration) as shortest_delivery_time,
+    max(duration) as longest_delivery_time,
+	(max(duration)- min(duration)) as delivery_difference
+FROM runner_orders_clean;
+
+
+-- 6. What was the average speed for each runner for each delivery and do you notice any trend for these values?
+-- speed = (distance / time)
+
+SELECT distinct 
+	COALESCE(runner_id, 'All runners') AS runner_id, 
+	coalesce(order_id, 'avg speed per runner') as order_id,
+    round(avg((distance*60)/duration),2) as 'avg speed (in mins)'
+FROM runner_orders_clean
+where cancellation is null
+GROUP BY runner_id, order_id with rollup
+
+
+
